@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          Products list
+        </div>
+        <div class="card-body">
+          <!--<button class="btn btn-primary" (click)="onGetProducts()">Products</button>-->
+          <form #f="ngForm" (ngSubmit)="onSearch(f.value)">
+            <label for="keyword">keyword</label>
+            <input class="form-control" type="text" id="keyword" name="keyword" ngModel />
+            <br>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-search"></i> Search</button>
+          </form>
+          <table class="table" *ngIf="products; else noProducts">
+            <thead class="card-header">
+            <tr>
+              <td>ID</td>
+              <td>Designation</td>
+              <td>Price</td>
+              <td>Quantity</td>
+              <td>Actions</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let p of products._embedded.products">
+              <td>{{ p.id}}</td>
+              <td>{{ p.designation}}</td>
+              <td>{{ p.price|number:'0.2'}} €</td>
+              <td>{{ p.quantity}}</td>
+              <td>
+                <a class="text-danger clickable" (click)="onDelete(p)"><i class="fas fa-times"></i></a>
+                <a class="text-success clickable ml-3" (click)="onEdit(p)"><i class="fas fa-cog"></i></a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <div *ngIf="pages" class="btn-group">
+            <button *ngFor="let p of pages ; let i = index" (click)="onPageProduct(i)" [ngClass]="currentPage === i ? 'active' : ''" class="btn btn-primary">
+              {{ i }}
+            </button>
+          </div>
+          <ng-template #noProducts>
+            <p>No products</p>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" >
+    <div class="col-md-12">
+
+    </div>
+  </div>
+
+</div>
